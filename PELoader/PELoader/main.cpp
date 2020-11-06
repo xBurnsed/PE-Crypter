@@ -10,30 +10,26 @@
 
 #pragma comment(lib, "Crypt32.lib")
 
-std::pair<char*, DWORD> decryptData(unsigned char encBufferInput[], const char* key) throw(...) {
-	try {
-		DWORD decodedSize;
-		CryptStringToBinaryA((char*)encBufferInput, ENC_DATA_SIZE, CRYPT_STRING_BASE64, NULL, &decodedSize, NULL, NULL);
+std::pair<char*, DWORD> decryptData(unsigned char encBufferInput[], const char* key)  {
+	DWORD *decodedSize = new DWORD();
+	CryptStringToBinaryA((char*)encBufferInput, ENC_DATA_SIZE, CRYPT_STRING_BASE64, NULL, decodedSize, NULL, NULL);
 
-		char* decodedBuffer = new char[decodedSize]();
+	char* decodedBuffer = new char[*decodedSize]();
 
-		CryptStringToBinaryA((char*)encBufferInput, ENC_DATA_SIZE, CRYPT_STRING_BASE64, (BYTE*)decodedBuffer, &decodedSize, NULL, NULL);
+	CryptStringToBinaryA((char*)encBufferInput, ENC_DATA_SIZE, CRYPT_STRING_BASE64, (BYTE*)decodedBuffer, decodedSize, NULL, NULL);
 
-		std::cout << "Sizeof of array in bytes: " << ENC_DATA_SIZE << std::endl;
+	std::cout << "Sizeof of array in bytes: " << ENC_DATA_SIZE << std::endl;
 
-		rc4Algorithm rc4;
+	rc4Algorithm rc4;
 
-		char* decryptedBufferOutput = new char[decodedSize]();
+	char* decryptedBufferOutput = new char[*decodedSize]();
 
-		rc4.crypt(decodedBuffer, key, strlen(key), decodedSize, decryptedBufferOutput);
+	rc4.crypt(decodedBuffer, key, strlen(key), *decodedSize, decryptedBufferOutput);
 
-		delete[] decodedBuffer;
+	delete[] decodedBuffer;
 
-		return std::make_pair(decryptedBufferOutput, decodedSize);
-	}
-	catch (...) {
-		std::cout << "Exception occurred" << std::endl;
-	}
+	return std::make_pair(decryptedBufferOutput, *decodedSize);
+
 }
 
 
@@ -57,4 +53,5 @@ int main(int argc, char* argv[]) {
 		decCalc.write(decOut.first, decOut.second);
 		decCalc.close();
 	}*/
+	return 0;
 }

