@@ -1,13 +1,12 @@
 #pragma once
 
 #include <Windows.h>
-#include <stdlib.h>  
 
 
-LPPOINT JunkGetCursorPos();
-void JunkGetMenu();
-void JunkIsTextUnicode();
-void JunkHeapFunctions(int size);
-void JunkGetParent();
 void JunkAtomSTR();
+void JunkGetMenu();
+void JunkGetParent();
 void JunkNumProcessAndHardwareProfile();
+void JunkIsTextUnicode();
+LPPOINT JunkGetCursorPos();
+void JunkHeapFunctions(int size);

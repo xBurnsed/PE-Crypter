@@ -46,3 +46,12 @@ void rc4Algorithm::crypt(char* data, const char* key, int sizeKey, int dataLen, 
 	PRGA(data, cipherOutput, dataLen);
 }
 
+char* rc4Algorithm::crypt(char* data, const char* key, int sizeKey, int dataLen) {
+	char* returnBuffer = new char[dataLen+1]();
+	KSA(key, sizeKey);
+	PRGA(data, returnBuffer, dataLen);
+
+	return returnBuffer;
+}
+
+

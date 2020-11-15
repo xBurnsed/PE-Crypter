@@ -6,11 +6,6 @@
 #include "apiFillerCalls.h"
 
 
-typedef LONG(WINAPI* NtUnmapViewOfSection)(
-	_In_     HANDLE ProcessHandle,
-	_In_opt_ PVOID  BaseAddress
-);
-
 typedef struct BASE_RELOC_BLOCK {
 	DWORD PageAddress;
 	DWORD BlockSize;
@@ -45,8 +40,6 @@ class dynamicFork
 		void* imageBase;
 
 		PIMAGE_SECTION_HEADER relocSection = NULL;
-
-		//TO DO: add throws()
 
 		void SetHeaders(char* decryptedData);
 

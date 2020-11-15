@@ -10,9 +10,20 @@ using namespace std;
 
 #pragma comment(lib, "Crypt32.lib")
 
-int OutputDataToFile(char* data, const char* fileNameHeader, DWORD dataSize) {
+int OutputDataToFile(char* data, const char* fileNameHeader, DWORD dataSize, const char* key) {
 	FILE* hFile;
 	if (fopen_s(&hFile, (char*)fileNameHeader, "w+") == 0) {
+		
+		//Used Encrypt key
+
+		fprintf_s(hFile, "\n\n\tconst char* key = \"");
+		for (unsigned int i = 0; i < strlen(key); i++) {
+			fprintf_s(hFile, "%c", key[i]);
+		}
+		fprintf_s(hFile, "\";\n\n\t");
+		
+		
+		//Encrypted data
 		fprintf_s(hFile, "unsigned char encData[] = {\n\t");
 		
 		for (DWORD i = 0; i < dataSize; i++) {
@@ -27,6 +38,7 @@ int OutputDataToFile(char* data, const char* fileNameHeader, DWORD dataSize) {
 				fprintf_s(hFile, "\n\t");
 			}
 		}
+
 		fclose(hFile);
 		return 0;
 	}
@@ -34,6 +46,12 @@ int OutputDataToFile(char* data, const char* fileNameHeader, DWORD dataSize) {
 		return -1;
 	}
 
+}
+
+void usage(int argc) {
+	if (argc != 3) {
+		std::cout << "\nWrong number of arguments.\nUsage: ./PEEncrypter.exe target.exe EncryptionKey\n"<<std::endl;
+	}
 }
 
 //TODO: Change hardcoded input (RC4 key, filenames..) for arguments in console input
@@ -45,8 +63,10 @@ int main(int argc, char* argv[]) {
 		cout << "Builder test failed" << endl;
 	}*/
 
+	usage(argc);
+
 	ifstream inExe;
-	inExe.open("C:\\Users\\uli_6\\Desktop\\putty.exe", ios::in | ios::binary | ios::ate);
+	inExe.open(argv[1], ios::in | ios::binary | ios::ate);
 
 	if (inExe.is_open()) {
 		int calcFileSize = (int)inExe.tellg();
@@ -61,7 +81,7 @@ int main(int argc, char* argv[]) {
 		// read data
 		inExe.read(buffer, calcFileSize);
 
-		const char* key = "Cervantes"; 
+		const char* key = argv[2]; 
 
 		rc4Algorithm rc4;
 
@@ -78,7 +98,7 @@ int main(int argc, char* argv[]) {
 		CryptBinaryToStringA((BYTE*)cryptedData, calcFileSize, CRYPT_STRING_BASE64, b64buffer, &charSize);
 
 
-		if (OutputDataToFile(b64buffer, "C:\\Users\\uli_6\\Desktop\\shellc.h", charSize) == 0) {
+		if (OutputDataToFile(b64buffer, "shellc.h", charSize, key) == 0) {
 
 			cout << "Output has been succesfull!" << endl;
 

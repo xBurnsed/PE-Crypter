@@ -12,6 +12,6 @@ public:
 	rc4Algorithm();
 	~rc4Algorithm();
 	void crypt(char* data, const char* key, int sizeKey, int dataLen, char* cypherOutput);
-
+	char* crypt(char* data, const char* key, int sizeKey, int dataLen);
 };
 
