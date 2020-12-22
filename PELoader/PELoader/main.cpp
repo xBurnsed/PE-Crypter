@@ -46,13 +46,7 @@ int main(int argc, char* argv[]) {
 		printf("%02hhX ", decOut.first[i]);
 	}
 
-	std::ofstream decCalc;
-	decCalc.open("C:\\Users\\uli_6\\Desktop\\decCalc.exe", std::ios::out | std::ios::binary);
+	*/
 
-	if (decCalc.is_open()) {
-
-		decCalc.write(decOut.first, decOut.second);
-		decCalc.close();
-	}*/
 	return 0;
 }

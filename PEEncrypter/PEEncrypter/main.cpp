@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
 		int calcFileSize = (int)inExe.tellg();
 		inExe.seekg(0, ios::beg);
 
-		cout << "Tamaño en bytes de la calculadora original: " << calcFileSize << endl;
+		//cout << "Tamaño en bytes de la calculadora original: " << calcFileSize << endl;
 
 		// allocate memory:
 		char* buffer = new char[calcFileSize]();
