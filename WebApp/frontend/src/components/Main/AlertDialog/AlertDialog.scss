@@ -1,0 +1,36 @@
+.modalDial {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-Index:5000;
+}
+
+.modal-dialog{
+    background-color:lightblue;
+}
+
+.modal-header{
+    background-color:#2a2d32;
+    color:white;
+}
+
+.modal-body{
+    background-color:#363940;
+    color:white;
+}
+
+.modal-footer{
+    background-color:#363940;
+}
+
+.blackBackgroundAlert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba($color: black, $alpha: 0.6);
+    z-Index:3000;
+  }

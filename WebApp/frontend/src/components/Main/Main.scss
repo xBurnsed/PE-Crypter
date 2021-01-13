@@ -1,0 +1,21 @@
+.custom-file-label::after{
+    background-color: #343a40 !important; 
+    color:white !important;
+    padding: 0.375rem 1.19rem !important;
+}
+
+.backgroundGradient {
+    background: #ECE9E6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+    opacity:90%;
+}
+
+h2{
+    color:black;
+}
+
+
+/*style={{backgroundColor:"#FFF0F5", opacity:"97%"}}*/
