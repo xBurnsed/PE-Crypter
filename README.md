@@ -1,5 +1,5 @@
-# PoC-Packer
-This is my Degree Final Project.
+# C++ Crypter
+This is my Final Degree Project.
 
 This project aims to implement a crypter (also known as Software Packer) as a Proof of Concept and to detail which obfuscation techniques can be used to convert a currently detected malware executable into an undetectable executable both in scan time and run time towards commercial antivirus. 
 
@@ -25,6 +25,8 @@ The implementation of this project is divided in four subprojects:
 Those were the results I got from a well known malware called Remcos (reduced from 23/26 detections to 0/26 detections):
 
 ![remcosCrypt](https://user-images.githubusercontent.com/14180748/126828407-bb906b31-f650-4eb7-a260-74c0d715893b.png)
+
+For the runtime I manually tested some Antivirus like Panda, Avira, Windows Defender... etc. None of those were able to detect the malware after going through my Crypter.
 
 
 
