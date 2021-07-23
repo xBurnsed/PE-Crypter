@@ -26,7 +26,7 @@ Those were the results I got from a well known malware called Remcos (reduced fr
 
 ![remcosCrypt](https://user-images.githubusercontent.com/14180748/126828407-bb906b31-f650-4eb7-a260-74c0d715893b.png)
 
-For the runtime I manually tested some Antivirus like Panda, Avira, Windows Defender... etc. None of those were able to detect the malware after going through my Crypter.
+For the runtime I manually tested some antivirus like Panda, Avira, Windows Defender... etc. None of those were able to detect the malware after going through my Crypter.
 
 
 
