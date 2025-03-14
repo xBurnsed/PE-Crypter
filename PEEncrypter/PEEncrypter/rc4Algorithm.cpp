@@ -1,11 +1,8 @@
 #include "rc4Algorithm.h"
 
-rc4Algorithm::rc4Algorithm() {
-}
+rc4Algorithm::rc4Algorithm() {}
 
-rc4Algorithm::~rc4Algorithm() {
-
-}
+rc4Algorithm::~rc4Algorithm() {}
 
 
 void rc4Algorithm::swap(unsigned int i, unsigned int j) {
@@ -26,15 +23,12 @@ void rc4Algorithm::KSA(const char* key, int keySize) {
 }
 
 void rc4Algorithm::PRGA(char* stream, char* cipherOutput, unsigned int dataLen) {
-	
 	int i = 0;
 	int j = 0;
 	for (unsigned int n = 0; n < dataLen; n++) {
 		i = (i + 1) % 256;
 		j = (j + sBox[i]) % 256;
-
 		swap(i, j);
-
 		cipherOutput[n] = (sBox[(sBox[i] + sBox[j]) % 256]) ^ stream[n];
 	}
 }
@@ -43,4 +37,3 @@ void rc4Algorithm::crypt(char* data, const char* key, int sizeKey, int dataLen, 
 	KSA(key, sizeKey);
 	PRGA(data, cipherOutput, dataLen);
 }
-

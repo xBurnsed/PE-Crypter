@@ -1,6 +1,5 @@
 #include "apiFillerCalls.h"
 
-
 LPPOINT JunkGetCursorPos() {
     auto lpPoint = new POINT();
     GetCursorPos(lpPoint);

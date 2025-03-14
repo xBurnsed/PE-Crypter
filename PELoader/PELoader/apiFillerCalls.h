@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 
-
 void JunkAtomSTR();
 void JunkGetMenu();
 void JunkGetParent();

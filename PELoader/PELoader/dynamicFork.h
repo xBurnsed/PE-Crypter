@@ -5,7 +5,6 @@
 #include <iostream>
 #include "apiFillerCalls.h"
 
-
 typedef struct BASE_RELOC_BLOCK {
 	DWORD PageAddress;
 	DWORD BlockSize;
@@ -18,8 +17,7 @@ typedef struct BASE_RELOC_ENTRY {
 
 #define TotalRelocationEntries(blockSize) (blockSize - sizeof(BASE_RELOC_BLOCK)) / sizeof(BASE_RELOC_ENTRY)
 
-class dynamicFork
-{
+class dynamicFork {
 	private:
 		struct {
 			char* filePath = new char[512]();
@@ -61,10 +59,8 @@ class dynamicFork
 
 		void SetContextAndResumeThread();
 
-
 	public:
 		dynamicFork(char* decryptedData);
 		~dynamicFork();
-
 };
 
