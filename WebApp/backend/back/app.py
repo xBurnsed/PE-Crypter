@@ -4,7 +4,6 @@ from shutil import copyfile
 from flask import Flask, request, jsonify, send_from_directory, after_this_request
 from flask_cors import CORS
 
-
 ALLOWED_EXTENSIONS = {'exe','ico'}
 
 app = Flask(__name__, static_folder='finalStubFile')
@@ -14,11 +13,9 @@ fileToCrypt = None
 outputFileName = ""
 sigFile = None
 
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 # No cacheing at all for API endpoints.
 @app.after_request
@@ -35,7 +32,6 @@ def DownloadCryptedFile():
 
 @app.route('/cryptfile',  methods=['POST'])
 def CryptFile():
-    
     #Receiving data
     global fileToCrypt
     fileToCrypt = request.files['fileToCrypt']
@@ -82,8 +78,6 @@ def CryptFile():
     response.status_code = 200
 
     return response
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

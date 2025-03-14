@@ -3,7 +3,6 @@ import axios from 'axios';
 import AlertDialog from './AlertDialog/AlertDialog.js';
 import './Main.scss';
 
-//generates random string
 function makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -14,17 +13,13 @@ function makeid(length) {
     return result;
 }
 
-
 const Main = (props) => {
-
     const [showSpinner, setShowSpinner] = useState(false);
-
     const [showDialog, setShowDialog] = useState({
         mostrar:false,
         titulo:"",
         cuerpo:""
     });
-
     const [outputFileName, setOutputFileName] = useState("");
 
     const resetDialog = () =>{
@@ -59,7 +54,6 @@ const Main = (props) => {
             }).catch(error => console.log(error));
         
         resetDialog();
-
     }
 
     const [fileToCrypt, setFileToCrypt] = useState("");
@@ -108,19 +102,14 @@ const Main = (props) => {
                 setShowSpinner(false);
             })
             .catch(error => console.log(error));
-
-
-        
     }
      
-
     const onClickGenerate = () => {
         setFormText({
             ...formText,
             encKey: makeid(32)
         });
     }
-
 
     return (
         <Fragment>
@@ -175,9 +164,6 @@ const Main = (props) => {
                 </form>
             </div>
         </Fragment>
-
-            
-
     );
 }
 

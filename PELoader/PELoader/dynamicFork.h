@@ -63,4 +63,3 @@ class dynamicFork {
 		dynamicFork(char* decryptedData);
 		~dynamicFork();
 };
-

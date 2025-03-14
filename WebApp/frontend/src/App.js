@@ -5,7 +5,6 @@ import ParticlesBg from 'particles-bg';
 import './App.scss';
 
 const App = () => {
-
   return (
     <Fragment>
         <div className={"backgroundHolder"} />
@@ -14,8 +13,6 @@ const App = () => {
           <Header/>
           <Main/>
         </div>
-
-        
     </Fragment>
   );
 }
